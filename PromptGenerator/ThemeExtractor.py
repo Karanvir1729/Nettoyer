@@ -1,5 +1,11 @@
 import cohere
 import tempfile
+import shutil
+
+def process_tag(userinput: list) -> str:
+  def process_tag(userinput: list) -> str:
+
+
 
 
 co = cohere.Client('{apiKey}')
