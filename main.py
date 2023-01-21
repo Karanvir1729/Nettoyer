@@ -2,7 +2,7 @@ import openai
 
 if __name__ == '__main__':
     history = ""
-    openai.api_key = "INSET KEY"
+    openai.api_key = "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"
     p = input("Hi! Hru?")
     response = openai.Completion.create(
         model="text-davinci-003",
