@@ -1,0 +1,79 @@
+Given a conversation, please return the major themes. 
+
+Conversation: 
+Person 1: I like to read. What about you?
+
+Person 2: I like to run.
+
+Person 1: I used to run too, but I hurt my knee.
+
+Person 2: I've never had a problem with my knees.
+
+Person 1: I'm glad I don't have your problem.
+
+Themes:
+Running, reading 
+--
+Conversation:
+Person 1: I love movies. What kind of movies do you like?
+
+Person 2: I like action movies.
+
+Person 1: Do you like horror movies?
+
+Person 2: No, I don't like horror movies.
+
+Person 1: What's your favorite action movie?
+
+Person 2: My favorite action movie is The Matrix.
+
+Person 1: The Matrix is a great movie because of the action.
+
+Person 2: Yeah, it is a great movie because of the action.
+
+Themes:
+movies, action, The Matrix 
+--
+Conversation:
+Person 1: I like to read books.
+
+Person 2: I like to watch movies.
+
+Person 1: What kind of books do you like to read?
+
+Person 2: I like to read horror books.
+
+Person 1: Oh, I don't like horror books.
+
+Person 2: Why not?
+
+Person 1: They are too scary.
+
+Person 2: Yeah, I know. I don't like them either.
+
+Person 1: Well, what kind of movies do you like to watch?
+
+Person 2: I like to watch comedy movies.
+
+Person 1: Oh, I don't like comedy movies.
+
+Person 2: Why not?
+
+Person 1: They are too cheesy.
+﻿
+Person 2: Yeah, I know. I don't like them either.
+
+Themes:
+Horror, comedy 
+--
+Conversation:
+Person 1: I like to play tennis.
+
+Person 2: I like to play golf.
+
+Person 1: How long have you played golf?
+
+Themes:
+Tennis, golf
+--
+Conversation: 
