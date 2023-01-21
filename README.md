@@ -1,2 +1,2 @@
 # Nettoyer
-TBA
+Decentralization. That word is thrown around a lot nowdays, isn't it? The true essence of decentralzation is to get control back from the centralized private institutes.  The mental health is inarguably our most priced posession. It is the only force that drives us to innovate and create. It is about time we get stand up against the public content institutions like tiktok and be in control. Nettoyer is the start of this revolution! 
