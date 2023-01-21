@@ -17,7 +17,6 @@ class FeedChanger:
     def __init__(self):
         opt = webdriver.ChromeOptions()
         opt.add_argument("--start-maximized")
-        ROOT_DIR = os.path.abspath(os.curdir)
 
         chromedriver_autoinstaller.install()
 
@@ -26,23 +25,20 @@ class FeedChanger:
 
 
 
-        """self.driver.get('https://accounts.google.com/')
+        self.driver.get('https://accounts.google.com/')
 
 
 
         while True:
             url = self.driver.current_url
             if url == "https://myaccount.google.com/?pli=1":
-                break"""
+                break
 
     def likeWatchVideo(self, videoId: str, watch_time: int):
         self.driver.get(f"https://www.youtube.com/watch?v={videoId}")
         Xpath = "/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[2]/div[2]/div/div/ytd-menu-renderer/div[1]/ytd-segmented-like-dislike-button-renderer/div[1]/ytd-toggle-button-renderer/yt-button-shape"
         self.wait.until(visible((By.XPATH, Xpath)))
         self.driver.find_element(By.XPATH, Xpath).click()
-        element = self.wait.until(EC.element_to_be_clickable((By.XPATH, "//*[@id='skip-button:6']/span/button")))
-        element.click()
-
 
         time.sleep(watch_time)
 
@@ -52,18 +48,12 @@ class FeedChanger:
         search = search.replace(" ", "+")
 
 
-
-
-
-
-
         self.driver.get(f'https://www.youtube.com/results?search_query={search}')
         self.wait.until(visible((By.ID, "video-title")))
 
-        self.driver.execute_script("window.scrollTo(0, 100000)")
+        self.driver.execute_script("window.scrollTo(0, 400000)")
 
         source = self.driver.page_source
-        print(source)
         ids = source.split('"videoId":"')[1:]
         for i, videoId in enumerate(ids):
             ids[i] = videoId.split('"')[0]
@@ -75,6 +65,4 @@ class FeedChanger:
         for videoId in ids:
             self.likeWatchVideo(videoId, watchTime)
 
-feedChanger = FeedChanger()
-feedChanger.likeWatchVideo("8tnf_LQTySM", 10)
-#feedChanger.changeFeed("Chess", 30)
+
