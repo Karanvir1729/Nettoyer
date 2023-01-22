@@ -1,4 +1,6 @@
 import flet
+import Automation as aut
+from PromptGenerator import something as smth
 from flet import (
     AppBar, Banner, Checkbox,
     Column,
@@ -207,6 +209,7 @@ class TodoApp(UserControl):
         count = 0
         if status == "Current Tags":
             self.tags.visible = True
+
             self.tags_chat.visible = False
             self.items_left.value = f"{count} Tags"
             self.addButton.on_click = self.add_clicked
@@ -222,6 +225,10 @@ class TodoApp(UserControl):
             self.addButton.on_click = self.add_clicked_setting
 
         super().update()
+
+def do_search(searchTerm):
+    feedChanger = aut.FeedChanger()
+    feedChanger.changeFeed(searchTerm, 0)
 
 
 def main(page: Page):

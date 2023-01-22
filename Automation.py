@@ -63,7 +63,3 @@ class FeedChanger:
 
         for videoId in ids:
             self.likeWatchVideo(videoId, watchTime)
-
-
-feedChanger = FeedChanger()
-feedChanger.changeFeed("Chess", 0)
