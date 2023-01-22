@@ -23,4 +23,5 @@ def generate_response(input: str) -> str:
             i += 1
     return returnvalue
 
-print(generate_response("chess"))
+
+print(generate_response("I like to cook"))
