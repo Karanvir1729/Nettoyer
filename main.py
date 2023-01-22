@@ -33,3 +33,5 @@ if __name__ == '__main__':
         ai_response = response["choices"][0]["text"]
         print(ai_response)
         history += f" {ai_response}\n"
+
+

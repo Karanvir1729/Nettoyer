@@ -2,7 +2,7 @@ import cohere
 import tempfile
 import shutil
 import Automation
-co = cohere.Client('CRG0zIYCyWU0bU9b1PCNeEuNniUlQRGRIlzgFGFG')
+co = cohere.Client('key')
 mode = 'command-xlarge-20221108'
 
 #examples = open("Examples.txt", "r")

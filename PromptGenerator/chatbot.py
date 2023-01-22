@@ -18,7 +18,3 @@ def generate_response(input: str) -> str:
             return_likelihoods='NONE')
         response = response.generations[0].splitlines()[1][10:]
     return response
-
-
-print(generate_response("I like to swim"))
-
