@@ -16,7 +16,11 @@ def generate_response(input: str) -> str:
             presence_penalty=0,
             stop_sequences=["User"],
             return_likelihoods='NONE')
+        i = 1
         returnvalue = response.generations[0].splitlines()[0].strip()
+        while not returnvalue:
+            returnvalue = response.generations[0].splitlines()[i].strip()
+            i += 1
     return returnvalue
 
-print(generate_response("testing"))
+print(generate_response("chess"))
