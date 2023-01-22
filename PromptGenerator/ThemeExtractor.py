@@ -19,7 +19,6 @@ def process_conversation(userinput: list) -> str:
         return_likelihoods='NONE')
     return response.generations[0].text
 
-print(process_conversation["Person 1: What are your interests?", "Person 2: I like to swim.", "Person 1: Where do you like to swim?","Person 2: I like going to the beach"])
 
 
 

@@ -1,6 +1,5 @@
 import flet
 import Automation as aut
-from PromptGenerator import something as smth
 from flet import (
     AppBar, Banner, Checkbox,
     Column,
@@ -18,6 +17,7 @@ from flet import (
     icons, padding, page,
 )
 import PromptGenerator.chatbot as cb
+import PromptGenerator.ThemeExtractor as ThemeExtractor
 
 
 class Bot:
@@ -32,12 +32,13 @@ class Bot:
 class Tag(UserControl):
     def __init__(self, tag_name, tag_delete):
         super().__init__()
+        self.completed = True
         self.tag_name = tag_name
         self.tag_delete = tag_delete
 
     def build(self):
         self.display_tag = Checkbox(
-            value=False, label=self.tag_name)
+            value=True, label=self.tag_name, on_change=self.status_changed)
 
         self.edit_name = TextField(expand=1)
 
@@ -69,7 +70,6 @@ class Tag(UserControl):
 
     def status_changed(self, e):
         self.completed = self.display_tag.value
-        self.tag_status_change(self)
 
     def delete_clicked(self, e):
         self.tag_delete(self)
@@ -168,13 +168,21 @@ class TodoApp(UserControl):
             ],
         )
 
-    def get_chat(self):
+    def get_tags(self):
+        lst = []
+        for tag in self.tags.controls:
+            if tag.completed:
+                lst.append(tag.tag_name)
+        return lst
+
+
+    def get_chat(self, name1 = "Person1", name2 = "Person2"):
         lst = []
         for row in self.tags_chat.controls:
             if row.alignment == "start":
-                lst.append(f"Person2: {row.controls[0].text}")
+                lst.append(f"{name2}: {row.controls[0].text}")
             else:
-                lst.append(f"Person1: {row.controls[0].text}")
+                lst.append(f"{name1}: {row.controls[0].text}")
         return lst
 
     def add_clicked(self, e):
@@ -184,6 +192,7 @@ class TodoApp(UserControl):
             self.new_tag.value = ""
             self.new_tag.focus()
             self.update()
+        print(self.get_tags())
 
     def add_clicked_setting(self, e):
         pass
@@ -198,7 +207,7 @@ class TodoApp(UserControl):
             self.new_tag.focus()
             self.update()
 
-            self.bot.generate_answer(self.new_tag.value)
+            self.bot.generate_answer(self.get_chat(name1= "Response", name2= "User"))
             tag = FilledTonalButton(self.bot.question, disabled=True)
             container = Row(controls=[tag], alignment="end")
             self.tags_chat.controls.append(container)
@@ -216,11 +225,27 @@ class TodoApp(UserControl):
         self.update()
 
     def clear_clicked(self, e):
-        for tag in self.tags.controls[:]:
-            if tag.completed:
-                self.tag_delete(tag)
+        status = self.filter.tabs[self.filter.selected_index].text
 
-    def update(self):
+        if status == "Current Tags":
+            a = ",".join(self.get_tags())
+            self.page.visible = False
+
+            feedChanger = aut.FeedChanger()
+            feedChanger.changeFeed(a, 0)
+            self.page.window_close()
+
+        elif status == "Chat Mode":
+            a = ThemeExtractor.process_conversation(self.get_chat())
+            self.page.visible = False
+
+
+            feedChanger = aut.FeedChanger()
+
+            feedChanger.changeFeed(a, 0)
+            self.page.window_close()
+
+def update(self):
         status = self.filter.tabs[self.filter.selected_index].text
         count = 0
         if status == "Current Tags":
