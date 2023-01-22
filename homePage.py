@@ -1,5 +1,4 @@
 import flet as ft
-from flet import *
 from urllib.parse import urlparse
 
 
@@ -12,45 +11,45 @@ class Bot:
         self.question = "yes daddy"  # call AI asking qustion
 
 
-
-
-
 def main(page: ft.Page):
     bot = Bot()
-    new_task = TextField(hint_text="Type your reply?")
+    new_task = ft.TextField(hint_text="Type your reply?")
 
     def add_bot(bot):
         # Calls bot question
         bot.get_question()
-        return Text(bot.question, size=15)
-
+        page.add(ft.Text(bot.question, size=15))
 
     def add_clicked(e):
+        print("sdf ")
+        print(new_task.value)
+        page.add(ft.Text(new_task.value, size=15))
+        add_bot(bot)
 
-        user = Text(new_task.value, size=15)
-        bote = add_bot(bot)
-        return (user, bote)
-
+        new_task.value = ""
+        page.update()
     youparams = "watermelon"
 
     def route_change(route):
         # CLEAR ALL PAGE
-        page.views.clear()
+        page.clean()
+        #page.views.clear()
         arr = [  # PAGE ROUTE IS PATH YOU URL HERE
-                Text(page.route),
-                ElevatedButton(
-                    "Go to Second Page",
-                    on_click=lambda _: page.go(f"/secondpage/{youparams}")
-                ), Text(bot.question, size=15), ElevatedButton("ADD", on_click=add_clicked), new_task
-            ]
+            ft.Text(page.route),
+            ft.ElevatedButton(
+                "Go to Second Page",
+                on_click=lambda _: page.go(f"/secondpage/{youparams}")
+            ), ft.Text(bot.question, size=15), ft.ElevatedButton("ADD", on_click=add_clicked), new_task
+        ]
 
-        chat_view = View(
+        chat_view = ft.View(
             "/", arr
 
         )
-
-        page.views.append(chat_view
-        )
+        for i in arr:
+            page.add(i)
+        #page.views.append(chat_view
+        #                  )
 
         page.scroll = 'auto'
         page.update()
@@ -62,20 +61,18 @@ def main(page: ft.Page):
         print(f"test res is : {res}")
 
         if page.route == f"/secondpage/{res}":
-            page.views.append(
-                View(
-                    f"/secondpage/{res}",
-                    [
-                        Text(page.route),
-                        Text(f"you params is {res}"),
-                        ElevatedButton(
+            page.clean()
+            page.route = ""
+            elem = [
+                        ft.Text(f"you params is {res}"),
+                        ft.ElevatedButton(
                             "BACK TO HOME PAGE",
                             on_click=lambda _: page.go("/")
                         )
 
                     ]
-                )
-            )
+            for i in elem:
+                page.add(i)
 
     page.update()
 
@@ -87,11 +84,11 @@ def main(page: ft.Page):
     page.on_route_change = route_change
     page.on_view_pop = view_pop
     page.go(page.route)
-    p = TemplateRoute(page.route)
+    p = ft.TemplateRoute(page.route)
     if p.match("/second/:id"):
         print("you here ", p.id)
     else:
         print("whatever")
 
 
-flet.app(target=main)
+ft.flet.app(target=main)
