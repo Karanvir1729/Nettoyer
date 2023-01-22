@@ -7,7 +7,7 @@ def generate_response(input: str) -> str:
     while not returnvalue or returnvalue[-1] != "?" or returnvalue.startswith('Do you like to'):
         response = co.generate(
             model='cba13dfa-279e-430a-9763-35bddf188434-ft',
-            prompt='Ask a follow up question about this users interest. ' + '\n'.join(input) + ' \n' + "Response: ",
+            prompt='You are a chatbot desgined to learn more about a user interest. Ask a follow up question about this users interest. ' + '\n'.join(input) + ' \n' + "Response: ",
             max_tokens=20,
             temperature=0.9,
             k=0,

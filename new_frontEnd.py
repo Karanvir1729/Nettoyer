@@ -132,6 +132,8 @@ class TodoApp(UserControl):
             title=Text("AppBar Example"),
         )
         # application's root control (i.e. "view") containing all other controls
+        self.toxicitySlider = Slider(value=100 ,min=0, max=100, divisions=10, label="{value}%")
+        self.tags_settings = Column(controls=[Text("Toxicity"), self.toxicitySlider], visible=False)
         self.setting = Row(
             alignment="spaceBetween",
             vertical_alignment="center",
@@ -163,7 +165,7 @@ class TodoApp(UserControl):
                     spacing=25,
                     controls=[
                         self.tags, self.tags_chat,
-                        self.setting
+                        self.setting, self.tags_settings
                     ],
                 ),
             ],
@@ -177,7 +179,7 @@ class TodoApp(UserControl):
         return lst
 
 
-    def get_chat(self, name1 = "Person1", name2 = "Person2"):
+    def get_chat(self, name1 = "Person2", name2 = "Person1"):
         lst = []
         for row in self.tags_chat.controls:
             if row.alignment == "start":
@@ -208,7 +210,7 @@ class TodoApp(UserControl):
             self.new_tag.focus()
             self.update()
 
-            self.bot.generate_answer(self.new_tag.value)
+            self.bot.generate_answer(self.get_chat(name1= "Response", name2= "End"))
             tag = FilledTonalButton(self.bot.question, disabled=True)
             container = Row(controls=[tag], alignment="end")
             self.tags_chat.controls.append(container)
@@ -230,23 +232,24 @@ class TodoApp(UserControl):
 
         if status == "Current Tags":
             a = ",".join(self.get_tags())
+
+            feedChanger = aut.FeedChanger(self.toxicitySlider.value)
+
             self.page.visible = False
 
-            feedChanger = aut.FeedChanger()
             feedChanger.changeFeed(a, 0)
             self.page.window_close()
 
         elif status == "Chat Mode":
             a = ThemeExtractor.process_conversation(self.get_chat())
+
+            feedChanger = aut.FeedChanger(self.toxicitySlider.value)
             self.page.visible = False
-
-
-            feedChanger = aut.FeedChanger()
 
             feedChanger.changeFeed(a, 0)
             self.page.window_close()
 
-def update(self):
+    def update(self):
         status = self.filter.tabs[self.filter.selected_index].text
         count = 0
         if status == "Current Tags":
@@ -256,6 +259,7 @@ def update(self):
             self.items_left.value = f"{count} Tags"
             self.addButton.on_click = self.add_clicked
             self.setting.visible = True
+            self.tags_settings.visible = False
 
         elif status == "Chat Mode":
             self.tags.visible = False
@@ -263,13 +267,14 @@ def update(self):
             self.items_left.value = f"{count} Tags"
             self.addButton.on_click = self.add_clicked_chat
             self.setting.visible = True
+            self.tags_settings.visible = False
 
         else:
             self.tags.visible = False
             self.tags_chat.visible = False
             self.addButton.on_click = self.add_clicked_setting
             self.setting.visible = False
-
+            self.tags_settings.visible = True
         super().update()
 
 

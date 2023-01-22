@@ -2,7 +2,7 @@ import cohere
 from cohere.classify import Example
 import random
 
-co = cohere.Client("key")
+co = cohere.Client("ZEcUXrPLLKZHyHRoJTfF8Jq0ftCuNn51Zh5vhj9t")
 
 examples = [
   Example("You're an idiot.", "Toxic"),

@@ -23,4 +23,3 @@ def process_tag(userinput: list) -> list:
     return searches
 
 
-print(process_tag(["Marvel", "Minecraft", "Swimming"]))

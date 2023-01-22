@@ -7,13 +7,14 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import os
-
+import likeCheck
 presence = EC.presence_of_element_located
 visible = EC.visibility_of_element_located
 
 
 class FeedChanger:
-    def __init__(self):
+    def __init__(self, toxicity):
+        self.toxicity = toxicity
         opt = webdriver.ChromeOptions()
         opt.add_argument("--start-maximized")
 
@@ -34,12 +35,13 @@ class FeedChanger:
                 break
 
     def likeWatchVideo(self, videoId: str, watch_time: int):
-        self.driver.get(f"https://www.youtube.com/watch?v={videoId}")
-        Xpath = "/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[2]/div[2]/div/div/ytd-menu-renderer/div[1]/ytd-segmented-like-dislike-button-renderer/div[1]/ytd-toggle-button-renderer/yt-button-shape"
-        self.wait.until(visible((By.XPATH, Xpath)))
-        self.driver.find_element(By.XPATH, Xpath).click()
+        if likeCheck.check_like(videoId, self.toxicity):
+            self.driver.get(f"https://www.youtube.com/watch?v={videoId}")
+            Xpath = "/html/body/ytd-app/div[1]/ytd-page-manager/ytd-watch-flexy/div[5]/div[1]/div/div[2]/ytd-watch-metadata/div/div[2]/div[2]/div/div/ytd-menu-renderer/div[1]/ytd-segmented-like-dislike-button-renderer/div[1]/ytd-toggle-button-renderer/yt-button-shape"
+            self.wait.until(visible((By.XPATH, Xpath)))
+            self.driver.find_element(By.XPATH, Xpath).click()
 
-        time.sleep(watch_time)
+            time.sleep(watch_time)
 
 
     def changeFeed(self, prompt, watchTime):
