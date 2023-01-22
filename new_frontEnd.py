@@ -8,7 +8,7 @@ from flet import (
     OutlinedButton,
     Page,
     PopupMenuButton, PopupMenuItem, Row,
-    Tab,
+    Slider, Tab,
     Tabs,
     Text,
     TextButton, TextField,
@@ -82,6 +82,7 @@ class chat_box(UserControl):
         self.chat_box_name = chat_box_name
 
     def build(self):
+
         self.display_view = Row(
             alignment="spaceBetween",
             vertical_alignment="center",
@@ -126,7 +127,7 @@ class TodoApp(UserControl):
         self.tags.visible = False
         self.tags_chat.visible = True
         self.items_left.value = f"{0} Tags"
-        self.addButton.on_click = self.add_clicked_chat
+        self.addButton.on_click=self.add_clicked_chat
         appbar = AppBar(
             title=Text("AppBar Example"),
         )
@@ -207,7 +208,7 @@ class TodoApp(UserControl):
             self.new_tag.focus()
             self.update()
 
-            self.bot.generate_answer(self.get_chat(name1= "Response", name2= "User"))
+            self.bot.generate_answer(self.new_tag.value)
             tag = FilledTonalButton(self.bot.question, disabled=True)
             container = Row(controls=[tag], alignment="end")
             self.tags_chat.controls.append(container)
