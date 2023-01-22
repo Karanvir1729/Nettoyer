@@ -13,7 +13,7 @@ visible = EC.visibility_of_element_located
 
 
 class FeedChanger:
-    def __init__(self):
+    def __init__(self, toxicity):
         opt = webdriver.ChromeOptions()
         opt.add_argument("--start-maximized")
 
