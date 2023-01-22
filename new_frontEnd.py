@@ -25,6 +25,7 @@ class Bot:
         self.question = "question"
 
     def generate_answer(self, question):
+        print(question)
         # pass in AI
         self.question = cb.generate_response(question)  # call AI asking qustion
 
@@ -210,7 +211,7 @@ class TodoApp(UserControl):
             self.new_tag.focus()
             self.update()
 
-            self.bot.generate_answer(self.get_chat(name1= "Response", name2= "End"))
+            self.bot.generate_answer(self.get_chat(name1= "Response", name2= "User"))
             tag = FilledTonalButton(self.bot.question, disabled=True)
             container = Row(controls=[tag], alignment="end")
             self.tags_chat.controls.append(container)

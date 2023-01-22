@@ -37,8 +37,5 @@ def process_conversation(userinput: list) -> str:
     return themes
 
 
-print(process_conversation(
-    ["Person 1: What are your interests?", "Person 2: I like to play chess.", "Person 1: Where do you like to play chess?", "Person 2: I like to play chess online at chess.com."]))
-
 # feedChanger = Automation.FeedChanger()
 # feedChanger.changeFeed(response.generations[0].text, 0)
