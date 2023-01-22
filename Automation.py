@@ -1,5 +1,4 @@
 import time
-
 import chromedriver_autoinstaller
 from selenium import webdriver
 from selenium.webdriver import DesiredCapabilities
@@ -66,3 +65,5 @@ class FeedChanger:
             self.likeWatchVideo(videoId, watchTime)
 
 
+feedChanger = FeedChanger()
+feedChanger.changeFeed("Chess", 0)

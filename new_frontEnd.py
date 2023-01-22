@@ -15,7 +15,7 @@ from flet import (
     colors,
     icons, padding, page,
 )
-
+import PromptGenerator.chatbot as cb
 
 class Bot:
     def __init__(self):
@@ -23,7 +23,7 @@ class Bot:
 
     def generate_answer(self, question):
         # pass in AI
-        self.question = "answer"  # call AI asking qustion
+        self.question = cb.generate_response(question) # call AI asking qustion
 
 
 class Tag(UserControl):
