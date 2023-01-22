@@ -1,7 +1,6 @@
 import cohere
 
 
-
 def process_tag(userinput: list) -> list:
     co = cohere.Client('lDQByuzzarqhHQ4Xu0fhaE887a6XZULYlryvbcmb')
     mode = 'command-xlarge-20221108'
@@ -21,5 +20,3 @@ def process_tag(userinput: list) -> list:
             return_likelihoods='NONE')
         searches.append(response.generations[0].text.split("\n")[0])
     return searches
-
-
