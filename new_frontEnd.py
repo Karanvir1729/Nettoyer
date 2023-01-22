@@ -19,13 +19,14 @@ from flet import (
 )
 import PromptGenerator.chatbot as cb
 
+
 class Bot:
     def __init__(self):
         self.question = "question"
 
     def generate_answer(self, question):
         # pass in AI
-        self.question = cb.generate_response(question) # call AI asking qustion
+        self.question = cb.generate_response(question)  # call AI asking qustion
 
 
 class Tag(UserControl):
@@ -96,7 +97,8 @@ class TodoApp(UserControl):
 
     def build(self):
         self.bot = Bot()
-        self.addButton = FloatingActionButton(icon=icons.ADD, on_click=self.add_clicked)
+        self.addButton = FloatingActionButton(icon=icons.ADD,
+                                              on_click=self.add_clicked)
 
         self.new_tag = TextField(
             on_submit=self.add_clicked,
@@ -112,7 +114,8 @@ class TodoApp(UserControl):
         self.filter = Tabs(
             selected_index=0,
             on_change=self.tabs_changed,
-            tabs=[Tab(text="Chat Mode"), Tab(text="Current Tags"), Tab(text="Settings")],
+            tabs=[Tab(text="Chat Mode"), Tab(text="Current Tags"),
+                  Tab(text="Settings")],
         )
 
         self.new_tag = TextField(
@@ -128,12 +131,23 @@ class TodoApp(UserControl):
             title=Text("AppBar Example"),
         )
         # application's root control (i.e. "view") containing all other controls
-
+        self.setting = Row(
+            alignment="spaceBetween",
+            vertical_alignment="center",
+            controls=[
+                self.items_left,
+                OutlinedButton(
+                    text="Apply Tags", on_click=self.clear_clicked
+                ),
+            ],
+        )
         self.page.banner = Banner(
             bgcolor=colors.BLACK,
             content=Text(""),
-            actions=[Row([Text(value="Nettoyer", style="headlineMedium")], alignment="center"),
-                     Row(controls=[Row(width=500, controls=[self.new_tag], alignment="center"), self.addButton],
+            actions=[Row([Text(value="Nettoyer", style="headlineMedium")],
+                         alignment="center"),
+                     Row(controls=[Row(width=500, controls=[self.new_tag],
+                                       alignment="center"), self.addButton],
                          alignment="center"),
                      Row(controls=[self.filter], alignment="center")
                      ],
@@ -148,20 +162,20 @@ class TodoApp(UserControl):
                     spacing=25,
                     controls=[
                         self.tags, self.tags_chat,
-                        Row(
-                            alignment="spaceBetween",
-                            vertical_alignment="center",
-                            controls=[
-                                self.items_left,
-                                OutlinedButton(
-                                    text="Apply Tags", on_click=self.clear_clicked
-                                ),
-                            ],
-                        )
+                        self.setting
                     ],
                 ),
             ],
         )
+
+    def get_chat(self):
+        lst = []
+        for row in self.tags_chat.controls:
+            if row.alignment == "start":
+                lst.append(f"Person2: {row.controls[0].text}")
+            else:
+                lst.append(f"Person1: {row.controls[0].text}")
+        return lst
 
     def add_clicked(self, e):
         if self.new_tag.value:
@@ -192,6 +206,8 @@ class TodoApp(UserControl):
             self.new_tag.focus()
             self.update()
 
+            print(self.get_chat())
+
     def tag_delete(self, tag):
         self.tags.controls.remove(tag)
         self.update()
@@ -213,18 +229,23 @@ class TodoApp(UserControl):
             self.tags_chat.visible = False
             self.items_left.value = f"{count} Tags"
             self.addButton.on_click = self.add_clicked
+            self.setting.visible = True
+
         elif status == "Chat Mode":
             self.tags.visible = False
             self.tags_chat.visible = True
             self.items_left.value = f"{count} Tags"
             self.addButton.on_click = self.add_clicked_chat
+            self.setting.visible = True
 
         else:
             self.tags.visible = False
             self.tags_chat.visible = False
             self.addButton.on_click = self.add_clicked_setting
+            self.setting.visible = False
 
         super().update()
+
 
 def do_search(searchTerm):
     feedChanger = aut.FeedChanger()
